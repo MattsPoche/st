@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-static int borderpx = 2;
+static char *font = "Source Code Pro:pixelsize=14:antialias=true:autohint=true";
+static int borderpx = 4;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -16,7 +16,7 @@ static int borderpx = 2;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char *shell = "/bin/sh";
+static char *shell = "/bin/bash";
 char *utmp = NULL;
 /* scroll program: to enable use a string like "scroll" */
 char *scroll = NULL;
@@ -84,48 +84,47 @@ char *termname = "st-256color";
  */
 unsigned int tabspaces = 8;
 
-/* bg opacity */
-float alpha = 0.8;
-
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+    [0] = "#263640", /* black   */
+    [1] = "#d12f2c", /* red     */
+    [2] = "#819400", /* green   */
+    [3] = "#b08500", /* yellow  */
+    [4] = "#2587cc", /* blue */
+    // [5] = "#696ebf", /* magenta */
+    [5] = "#8f69bf", /* magenta */
+    [6] = "#289c93", /* cyan    */
+    [7] = "#707880", /* white   */
 
 	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+    [8]  = "#4a697d", /* black   */
+    [9]  = "#fa3935", /* red     */
+    [10] = "#a4bd00", /* green   */
+    [11] = "#d9a400", /* yellow  */
+    [12] = "#2ca2f5", /* blue    */
+    // [13] = "#8086e8", /* magenta */
+    [13] = "#ba69bf", /* magenta */
+    [14] = "#33c5ba", /* cyan    */
+    [15] = "#c5c8c6", /* white   */
 
-	[255] = 0,
-
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
-	"#555555",
-	"black",
+    /* more colors can be added after 255 to use with DefaultXX */
+    // [256] = "#1d1f21", /* background */
+    [256] = "#282a33", /* background */
+    [257] = "#c5c8c6", /* foreground */
+    [258] = "#cccccc",
+    [259] = "#333333",
 };
-
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 7;
-unsigned int defaultbg = 258;
-static unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+float alpha = 1.0;
+unsigned int defaultbg = 256;
+unsigned int defaultfg = 257;
+unsigned int defaultcs = 258;
+unsigned int defaultrcs = 259;
 
 /*
  * Default shape of cursor
@@ -140,8 +139,8 @@ static unsigned int cursorshape = 2;
  * Default columns and rows numbers
  */
 
-static unsigned int cols = 80;
-static unsigned int rows = 24;
+static unsigned int cols = 100;
+static unsigned int rows = 28;
 
 /*
  * Default colour and shape of the mouse cursor
@@ -192,6 +191,9 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ TERMMOD, 				XK_plus,		alphachange, {.f =  0.05} },
+	{ TERMMOD, 				XK_underscore,	alphachange, {.f = -0.05} },
+	{ ControlMask,			XK_equal,		alphachange, {.f =   1.0} },
 };
 
 /*
